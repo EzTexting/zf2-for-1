@@ -56,8 +56,11 @@ class Zf2for1_Resource_Zf2
         $configuration = $appConfig;
 
         //------ copied from Zend\Mvc\Application::init
-        $smConfig = isset($configuration['service_manager']) ? $configuration['service_manager'] : array();
-        $serviceManager = new ServiceManager(new Service\ServiceManagerConfig($smConfig));
+        $smConfig = isset($configuration['service_manager']) ? $configuration['service_manager'] : [];
+        $smConfig = new Service\ServiceManagerConfig($smConfig);
+
+        $serviceManager = new ServiceManager();
+        $smConfig->configureServiceManager($serviceManager);
         $serviceManager->setService('ApplicationConfig', $configuration);
         $serviceManager->get('ModuleManager')->loadModules();
 
